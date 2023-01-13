@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./conf.d/nginx.conf:/etc/nginx/nginx.conf
+    container_name: node-express-nginx  
+    ports:
+      - 8081:80
+      - 8082:80
+    networks:
+      - node-express
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/home/app
+    container_name: node-express-app
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - node-express  
+    command: npm run start
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/home/app
+    container_name: node-express-web
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    networks:
+      - node-express  
+    command: npm run start  
+
+networks:
+  node-express:
+    driver: bridge
