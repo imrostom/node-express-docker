@@ -1,26 +1,24 @@
 const express = require("express");
+const { LOCATION } = process.env;
 
 // Constants
-const appPort = 3000;
-const webPort = 4000;
+const PORT = process.env.PORT ?? 3000;
 
 // App
 const app = express();
+
 app.get("/", (req, res) => {
-    const host = req.get('host').split(":");
-    const port = host[host.length - 1];
-
-    res.send(`You are accessing port are = ${port}`);
+    res.send(`My Location is ${LOCATION}`);
 });
 
-app.get("/about", (req, res) => {
-    res.send("This is about passge");
-});
+// app.get("/dhaka", (req, res) => {
+//     res.send(`My Location is ${LOCATION}`);
+// });
 
-app.listen(appPort, () => {
-    console.log(`Example app listening at http://localhost:${appPort} app port`);
-});
+// app.get("/cumilla", (req, res) => {
+//     res.send(`My Location is ${LOCATION}`);
+// });
 
-app.listen(webPort, () => {
-    console.log(`Example app listening at http://localhost:${webPort} web port`);
+app.listen(PORT, () => {
+    console.log(`My Port is ${PORT}`);
 });
