@@ -1,13 +1,16 @@
 version: "3.8"
 
 services:
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./conf.d/nginx.conf:/etc/nginx/nginx.conf
-    container_name: node-express-nginx  
+  caddy:
+    image: caddy:2.6.2-alpine
+    container_name: node-express-caddy  
+    restart: unless-stopped
     ports:
-      - 8081:80
+      - "8081:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
       - node-express
 
